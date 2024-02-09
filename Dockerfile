@@ -1,10 +1,4 @@
-FROM maven:3.8.3-openjdk-17 AS build
-WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
-
-FROM openjdk:17-jdk-slim
-WORKDIR /app
-COPY --from=build /app/target/demo-0.0.1-SNAPSHOT.jar demo.jar
+FROM openjdk:17
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","demo.jar"]
+ADD target/demo-0.0.1-SNAPSHOT.jar demo.jar
+ENTRYPOINT ["java", "-jar", "demo.jar"]
